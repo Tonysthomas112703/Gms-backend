@@ -1,30 +1,29 @@
 package com.example.GMS.service;
 
-import com.example.GMS.model.User;
-import com.example.GMS.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class AuthenticationService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private static final Map<String, String> users = new HashMap<>();
 
-    // Method to authenticate user based on username and password from database
-    public boolean authenticate(String username, String password) {
-        // Find user by username
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        // Check if the password matches (you can also hash the passwords and use BCrypt for comparison)
-        return user.getPassword().equals(password);
+    static {
+        // In a real application, you would load users from a database
+       // users.put("user", "password"); // USER role
+        users.put("assignee", "assigneepassword"); // ASSIGNEE role
+        users.put("technician", "technicianpassword"); // TECHNICIAN role
     }
 
-    // Additional method to get the user's role
-    public String getUserRole(String role) {
-        User user = userRepository.findByUsername(role)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        return user.getRole();
+    public boolean authenticate(String username, String password) {
+        return password.equals(users.get(username));
+    }
+
+    public String getRole(String username) {
+        //if (username.equals("user")) return "USER";
+        if (username.equals("assignee")) return "ASSIGNEE";
+        if (username.equals("technician")) return "TECHNICIAN";
+        return "GUEST";
     }
 }

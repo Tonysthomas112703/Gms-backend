@@ -1,5 +1,11 @@
 package com.example.GMS.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+
 public class StatusUpdate {
     private String status;
 

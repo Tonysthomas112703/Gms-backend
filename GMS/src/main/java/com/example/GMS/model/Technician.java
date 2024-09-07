@@ -7,7 +7,7 @@ public class Technician {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long technicianId;
 
     private String name;
     private String expertise; // e.g., Mobile Repair, Laptop Repair
