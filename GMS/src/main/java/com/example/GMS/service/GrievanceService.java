@@ -60,9 +60,10 @@ public class GrievanceService {
         return grievanceRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("!!!Grievance not found!!!@"));
     }
+
     public Grievance assignTechnician(Long grievanceId, Long technicianId, String username, String password) {
         // Authenticate user and check role before proceeding
-        if (!authenticationService.authenticate( username,password)) {
+        if (!authenticationService.authenticate(username, password)) {
             throw new UnauthorizedActionException("!!!Invalid username or password.!!!");
         }
 
@@ -93,7 +94,7 @@ public class GrievanceService {
 
 
     public Grievance updateStatus(Long grievanceId, String status, String username, String password) {
-        if (!authenticationService.authenticate( username,password)) {
+        if (!authenticationService.authenticate(username, password)) {
             throw new UnauthorizedActionException("!!!Invalid username or password.!!!");
         }
 
@@ -103,11 +104,10 @@ public class GrievanceService {
 
 
         Grievance grievance = getGrievanceById(grievanceId);
-            grievance.setStatus(status);
+        grievance.setStatus(status);
         grievance.setUpdatedDate(LocalDateTime.now());
-            return grievanceRepository.save(grievance);
+        return grievanceRepository.save(grievance);
 
     }
 
-    // Additional methods as needed...
 }

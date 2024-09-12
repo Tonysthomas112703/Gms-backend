@@ -16,11 +16,11 @@ public class GrievanceController {
     @Autowired
     private GrievanceService grievanceService;
 
-    @PostMapping
-    public Grievance createGrievance(@RequestBody Grievance grievance,
-                                     @RequestParam String username,
-                                     @RequestParam String password) {
-        return grievanceService.createGrievance(grievance,username,password);
+    @PostMapping("/create")
+    public String createGrievance(@RequestBody Grievance grievance,
+                                  @RequestParam String username,
+                                  @RequestParam String password) {
+        return "!!!Grievance Submitted Successfully!!!!" +grievanceService.createGrievance(grievance,username,password);
     }
 
 
@@ -31,7 +31,7 @@ public class GrievanceController {
             @RequestParam String username,
             @RequestParam String password) {
         Grievance grievance = grievanceService.assignTechnician(grievanceId, technicianId, username, password);
-        return "Technician Has Being Assigned!!!" +ResponseEntity.ok(grievance);
+        return "!!!Technician Has Being Assigned!!!" +ResponseEntity.ok(grievance);
     }
 
     @ExceptionHandler(UnauthorizedActionException.class)
@@ -45,12 +45,13 @@ public class GrievanceController {
     }
 
 
-    @PutMapping("/{grievance_Id}/update-status")
-    public String updateStatus(@PathVariable Long grievance_Id,
+    @PutMapping("/{grievanceId}/update-status")
+    public String updateStatus(@PathVariable Long grievanceId,
                                @RequestParam String status,
                                @RequestParam String username,
                                @RequestParam String password) {
-        return  "Grievance Status is updated Successfully!!!!" + grievanceService.updateStatus(grievance_Id, status, username, password);
+        Grievance grievance = grievanceService.updateStatus(grievanceId,status, username, password);
+        return "!!!Status Updated Successfully!!!" +ResponseEntity.ok(grievance);
 
 
     }
