@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -31,7 +32,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/register").permitAll()
                         .requestMatchers("/grievance/create/**", "/grievance/find").hasRole("USER")
-                        .requestMatchers("/grievance/assign/**", "/grievance/technicians**","/grievances/unassigned").hasRole("ASSIGNEE")
+                        .requestMatchers("/grievance/assign/**", "/grievance/technicians**","/grievances/unassigned", "/api/register-technician").hasRole("ASSIGNEE")
                         .requestMatchers("/grievance/update-grievance-status/**", "/grievance/update-technician-status/**","/grievance/get-grievances/{technicianId}").hasRole("TECHNICIAN")
                         .anyRequest().authenticated()
                 )
