@@ -18,6 +18,7 @@ import java.util.UUID;
 
 @RestController
 @Validated
+@CrossOrigin(origins = "http://127.0.0.1:3000")
 
 @RequestMapping("/grievance")
 public class GrievanceController {
@@ -27,7 +28,7 @@ public class GrievanceController {
     @Autowired
     private  UserService userService;
 
-    // Creating grievances
+    // Creating grievances(For user_)
     @PostMapping("/create")
     public ResponseEntity<?> createGrievance(@Valid @RequestBody GrievanceRequestDTO grievanceRequestDTO) {
         try {
@@ -38,7 +39,7 @@ public class GrievanceController {
         }
     }
 
-    // Get grievances by username
+    // Get grievances by username(User)
     @GetMapping("/find")
     public ResponseEntity<?> getGrievancesByUsername(@RequestParam String username) {
         try {
@@ -52,7 +53,7 @@ public class GrievanceController {
         }
     }
 
-    // Get unassigned grievances
+    // Get unassigned grievances(assignee)
     @GetMapping("/unassigned")
     public ResponseEntity<?> getUnassignedGrievances() {
         try {
@@ -87,19 +88,8 @@ public class GrievanceController {
             return new ResponseEntity<>("Error assigning technician: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-        //Register new Technicians'
-    @PostMapping("/register-technician")
-    public ResponseEntity<String> register(@RequestBody User user) {
-        try{
-        userService.registerUser(user);
-        return ResponseEntity.ok("Technician registered successfully");
-    }catch (Exception e) {
-            return new ResponseEntity<>("Error registering new technician: " + e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
 
-        }
-
-    // Get grievances by technician Id
+    // Get grievances by technician Id (Technician)
     @GetMapping("/get-grievances")
     public ResponseEntity<?> getGrievancesByTechnicianId(@RequestParam Long technicianId) {
         try {

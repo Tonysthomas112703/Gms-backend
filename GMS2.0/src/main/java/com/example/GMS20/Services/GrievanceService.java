@@ -102,17 +102,6 @@ public class GrievanceService {
             throw new RuntimeException("Error assigning technician to grievance: " + e.getMessage(), e);
         }
     }
-//Register New Technician
-    public void registerUser(User user) {
-        try {
-            user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-            userRepository.save(user);
-
-        }catch (Exception e){
-            throw new RuntimeException("Error in registering new technician: " + e.getMessage(),e);
-        }
-
-    }
 
     // View all grievances by technician Id (TECHNICIAN)
     public List<GrievanceResponseDTO> getGrievancesByTechnicianId(Long technicianId) {
